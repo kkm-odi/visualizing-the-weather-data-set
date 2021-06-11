@@ -9,19 +9,9 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-# Generate a line chart that visualizes the readings in the months
 
 def line_chart(df,period,col):
-    """ A line chart that visualizes the readings in the months
-    
-    This function accepts the dataframe df ,period(day/month/year) and col(feature), which plots the aggregated value of the feature based on the periods. Ensure the period labels are properly named.
-    
-    Keyword arguments:
-    df - Pandas dataframe which has the data.
-    period - Period of time over which you want to aggregate the data
-    col - Feature of the dataframe
-    
-    """
+
     if period == "Month":
         data = df.groupby(df.index.month).mean()
     elif period == "Day":
@@ -45,14 +35,7 @@ def line_chart(df,period,col):
 
 # Function to perform univariate analysis of categorical columns
 def plot_categorical_columns(df):
-    """ Univariate analysis of categorical columns
     
-    This function accepts the dataframe df which analyzes all the variable in the data and performs the univariate analysis using bar plot.
-    
-    Keyword arguments:
-    df - Pandas dataframe which has the data.
-    
-    """
     categorical_columns = df.select_dtypes(include=['object']).columns
     
     for i in range(0,len(categorical_columns),2):
@@ -77,15 +60,7 @@ def plot_categorical_columns(df):
 
 # Function to plot continous plots
 def plot_cont(df,plt_typ):
-    """ Univariate analysis of Numerical columns
     
-    This function accepts the dataframe df, plt_type(boxplot/distplot) which analyzes all the variable in the data and performs the univariate analysis using boxplot or distplot plot.
-    
-    Keyword arguments:
-    df - Pandas dataframe which has the data.
-    plt_type - type of plot through which you want to visualize the data
-    
-    """
     numeric_columns = df.select_dtypes(include=['number']).columns.tolist()
     df = df[numeric_columns]
     
@@ -111,19 +86,7 @@ def plot_cont(df,plt_typ):
 
 # Function to plot grouped values based on the feature
 def group_values(df,col1,agg1,col2):
-    """ Agrregate values by grouping
     
-    This function accepts a dataframe, 2 column(feature) and aggregated function(agg1) which groupby the dataframe based on the column and plots the bar plot.
-   
-    Keyword arguments:
-    df - Pandas dataframe which has the data.
-    col1 - Feature of the dataframe on which values will be aggregated.
-    agg1 - Dictionary of aggregate functions with feature as the key and func as the value
-    col2 - Feature of the dataframe to be plot against grouped data.
-    
-    Returns:
-    grouping - Dataframe with all columns on which it is grouped on.
-    """
     aggregate = {'mean':np.mean,'max':np.max,'min':np.min}
     grouping = df.groupby(col1).agg(aggregate[agg1])
     plt.figure(figsize=(10,4))
